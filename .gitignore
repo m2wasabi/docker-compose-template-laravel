@@ -1,0 +1,10 @@
+build/*
+.lock-wscript
+npm-debug.log
+.idea
+Debug
+*.log
+node_modules
+prebuilds/*
+angle/build/*
+example/**/*.ppm
