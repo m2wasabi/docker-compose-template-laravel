@@ -3,6 +3,13 @@ data-www:
     image: busybox
     volumes:
         - ./app:/app
+
+## php-fpm
+php-fpm:
+    image: php:7-fpm-alpine
+    volumes_from:
+        - data-www
+
 # nginx
 mginx:
     image: nginx:alpine
@@ -10,6 +17,8 @@ mginx:
         - data-www
     volumes:
         - ./vhosts-main.conf:/etc/nginx/conf.d/default.conf
+    links:
+        - php-fpm
     ports:
         - "8080:80"
 #        - "443:443"
