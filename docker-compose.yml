@@ -5,7 +5,7 @@ data-www:
         - ./www:/var/www
 # nginx
 mginx:
-    image: nginx
+    image: nginx:alpine
     volumes_from:
         - data-www
     volumes:
