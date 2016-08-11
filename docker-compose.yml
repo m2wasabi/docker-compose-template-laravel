@@ -2,7 +2,7 @@
 data-www:
     image: busybox
     volumes:
-        - ./www:/var/www
+        - ./app:/app
 # nginx
 mginx:
     image: nginx:alpine
