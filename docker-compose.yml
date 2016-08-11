@@ -1,0 +1,15 @@
+# data-www
+data-www:
+    image: busybox
+    volumes:
+        - ./www:/var/www
+# nginx
+mginx:
+    image: nginx
+    volumes_from:
+        - data-www
+    volumes:
+        - ./vhosts-main.conf:/etc/nginx/conf.d/default.conf
+    ports:
+        - "8080:80"
+#        - "443:443"
