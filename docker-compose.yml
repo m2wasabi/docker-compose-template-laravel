@@ -16,7 +16,7 @@ mginx:
     volumes_from:
         - data-www
     volumes:
-        - ./vhosts-main.conf:/etc/nginx/conf.d/default.conf
+        - ./docker-assets/nginx/vhosts-main.conf:/etc/nginx/conf.d/default.conf
     links:
         - php-fpm
     ports:
