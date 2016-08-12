@@ -6,7 +6,7 @@ data-www:
 
 ## php-fpm
 php-fpm:
-    image: php:7-fpm-alpine
+    build: ./docker-assets/php-fpm
     volumes_from:
         - data-www
 
