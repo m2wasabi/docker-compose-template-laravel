@@ -9,6 +9,8 @@ php-fpm:
     build: ./docker-assets/php-fpm
     volumes_from:
         - data-www
+    links:
+        - mysql
 
 # nginx
 mginx:
