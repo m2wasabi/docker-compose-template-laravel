@@ -15,7 +15,6 @@ Linux, OSX amd Windows firiendly.
 
     ```
     git clone git@github.com:m2wasabi/docker-compose-templates.git
-    docker-compose build
     ```
 
     if you use different config (minimal usage) try another branches.
@@ -26,9 +25,39 @@ Linux, OSX amd Windows firiendly.
     git clone git@github.com:<your account>/<your Laravel project>.git app
     git clone git@github.com:<your account>/<your Vue.js project>.git node
     git clone git@github.com:<your account>/<your Swagger project>.git swagger
-    docker-compose build
     ```
 
+3. Configure containers
+
+    ### Nginx
+
+    `docker-assets/nginx/vhosts-main.conf`
+
+    + Comment or uncomment settings
+
+    ### PHP
+
+    `docker-assets/php-fpm/Dockerfile`
+
+    + Configure php packages
+
+    ### Node.js
+
+    `docker-assets/node/scripts/bootstrap.sh`
+
+    + Configure entrypoint
+
+    ### Docker compose
+
+    `docker-compose.yml`
+
+    + Comment or uncomment settings
+
+4. Build Docker container  
+
+    ```
+    docker-compose build
+    ```
 
 3. Start containers  
 
