@@ -1,40 +1,62 @@
 # data-www
 data-www:
+    container_name: myproject_data-www
     image: busybox
     volumes:
         - ./app:/app
 
 ## php-fpm
 php-fpm:
+    container_name: myproject_php-fpm
     build: ./docker-assets/php-fpm
     volumes_from:
         - data-www
+    volumes:
+        - ./docker-assets/php-fpm/scripts:/scripts
     links:
         - mysql
+    working_dir: /app
 
 # nginx
-mginx:
+nginx:
+    container_name: myproject_nginx
     image: nginx:alpine
     volumes_from:
         - data-www
     volumes:
+        - ./swagger:/swagger
         - ./docker-assets/nginx/vhosts-main.conf:/etc/nginx/conf.d/default.conf
     links:
         - php-fpm
+        - node
     ports:
-        - "8080:80"
+        - "8080:8080"
 #        - "443:443"
+    working_dir: /app
 
 # mysql
 mysql:
+    container_name: myproject_mysql
     image: mysql
     volumes:
         - ./docker-assets/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
         - ./mysql_data:/var/lib/mysql
     ports:
-        - "3306:3306"
+         - "3306:3306"
     environment:
         MYSQL_ROOT_PASSWORD: secret
-        MYSQL_DATABASE: myproject
-        MYSQL_USER: myproject
+        MYSQL_DATABASE: homestead
+        MYSQL_USER: homestead
         MYSQL_PASSWORD: secret
+
+## node
+node:
+    container_name: myproject_node
+    image: node
+    volumes:
+        - ./docker-assets/node/scripts:/scripts
+        - ./node:/app
+    links:
+        - mysql
+    working_dir: /app
+    entrypoint: /scripts/bootstrap.sh
