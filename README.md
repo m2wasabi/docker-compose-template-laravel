@@ -196,8 +196,8 @@ mysql.bat
 + app/public  
     Web publish files  
 
-+ node/server.js  (Default Disabled)
++ node/server.js  (Default Disabled)  
     Node.js execute file as a web server  
 
-+ swagger  (Default Disabled)
++ swagger  (Default Disabled)  
     Web publish files on http://localhost:8080/swagger/ 
