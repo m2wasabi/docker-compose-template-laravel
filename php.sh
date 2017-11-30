@@ -1,2 +1,3 @@
 #!/bin/sh
-docker exec -it myproject_php-fpm sh
+. .env
+docker exec -it ${PROJECT_NAME}_php-fpm sh

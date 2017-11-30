@@ -1,13 +1,13 @@
 # data-www
 data-www:
-    container_name: myproject_data-www
+    container_name: ${PROJECT_NAME}_data-www
     image: busybox
     volumes:
         - ./app:/app
 
 ## php-fpm
 php-fpm:
-    container_name: myproject_php-fpm
+    container_name: ${PROJECT_NAME}_php-fpm
     build: ./docker-assets/php-fpm
     volumes_from:
         - data-www
@@ -20,7 +20,7 @@ php-fpm:
 
 # nginx
 nginx:
-    container_name: myproject_nginx
+    container_name: ${PROJECT_NAME}_nginx
     image: nginx:alpine
     volumes_from:
         - data-www
@@ -37,7 +37,7 @@ nginx:
 
 # mysql
 mysql:
-    container_name: myproject_mysql
+    container_name: ${PROJECT_NAME}_mysql
     image: mysql
     volumes:
         - ./docker-assets/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
@@ -52,12 +52,12 @@ mysql:
 
 ## redis
 redis:
-    container_name: myproject_redis
+    container_name: ${PROJECT_NAME}_redis
     image: redis:alpine
 
 # ## node
 # node:
-#     container_name: myproject_node
+#     container_name: ${PROJECT_NAME}_node
 #     image: node
 #     volumes:
 #         - ./docker-assets/node/scripts:/scripts

@@ -1,2 +1,3 @@
 #!/bin/sh
-docker exec -it myproject_mysql mysql -uhomestead -psecret homestead
+. .env
+docker exec -it ${PROJECT_NAME}_mysql mysql -uhomestead -psecret homestead
