@@ -1,2 +1,4 @@
 [mysqld]
-character-set-server=utf8
+character-set-server=utf8mb4
+;general_log=1
+;general_log_file=/var/lib/mysql/general-query.log
