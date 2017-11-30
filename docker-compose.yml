@@ -17,6 +17,8 @@ php-fpm:
         - mysql
         - redis
     working_dir: /app
+    environment:
+        REDIS_PORT: 
 
 # nginx
 nginx:
