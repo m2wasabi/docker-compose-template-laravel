@@ -1,4 +1,4 @@
-# docker-compose-templates
+# docker-compose-template-laravel
 simple docker-compose templates for Laravel, Node.js frontend(example Vue.js) and Swagger.
 
 this use prefer officeal last images.
