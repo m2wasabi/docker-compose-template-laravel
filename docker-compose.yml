@@ -15,6 +15,7 @@ php-fpm:
         - ./docker-assets/php-fpm/scripts:/scripts
     links:
         - mysql
+        - redis
     working_dir: /app
 
 # nginx
@@ -48,6 +49,11 @@ mysql:
         MYSQL_DATABASE: homestead
         MYSQL_USER: homestead
         MYSQL_PASSWORD: secret
+
+## redis
+redis:
+    container_name: myproject_redis
+    image: redis:alpine
 
 ## node
 node:
