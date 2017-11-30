@@ -23,15 +23,26 @@ Linux, OSX amd Windows firiendly.
 
     ```
     git clone git@github.com:<your account>/<your Laravel project>.git app
+    ```
+
+    and Additional side project (if needed)
+
+    ```
     git clone git@github.com:<your account>/<your Vue.js project>.git node
     git clone git@github.com:<your account>/<your Swagger project>.git swagger
+    ```
+
+    or new blank project
+
+    ```
+    mkdir -p app/public
     ```
 
 3. Configure containers
 
     ### Nginx
 
-    `docker-assets/nginx/vhosts-main.conf`
+    `docker-assets/nginx/conf.d/vhosts-main.conf`
 
     + Comment or uncomment settings
 
@@ -41,7 +52,7 @@ Linux, OSX amd Windows firiendly.
 
     + Configure php packages
 
-    ### Node.js
+    ### Node.js (Default disabled)
 
     `docker-assets/node/scripts/bootstrap.sh`
 
@@ -65,16 +76,18 @@ Linux, OSX amd Windows firiendly.
     docker-compose up
     ```
 
-4. Setup api  
+4. Join console to Setup  
 
     Linux/OSX
     ```
     ./php.sh
+    ./mysql.sh
     ```
 
     Windows
     ```
-    php.bat
+    .\php.bat
+    .\mysql.bat
     ```
 
     then, enter php-fpm container
@@ -112,15 +125,45 @@ or
 php.bat
 ```
 
-### Shell utility command
+### Install Laravel (if new project)
 
-  - New Setup API server
+```
+composer global require laravel/installer
+
+PATH=$PATH:$HOME/.composer/vendor/bin/
+export PATH
+
+laravel new
+```
+
+### Laravel configure parameters
+
+If you use redis install predis
+
+```
+composer require predis/predis
+```
+
+Edit `.env` file
+
+```
+DB_HOST=mysql
+REDIS_HOST=redis
+
+CACHE_DRIVER=redis
+SESSION_DRIVER=redis
+QUEUE_DRIVER=redis
+```
+
+### Shell utility command for Laravel
+
+  - Setup New Appplication
 
     ```
     /scripts/setup.sh
     ```
 
-  - Update API server
+  - Update Application (migrate)
 
     ```
     /scripts/update.sh
@@ -153,8 +196,8 @@ mysql.bat
 + app/public  
     Web publish files  
 
-+ node/server.js  
++ node/server.js  (Default Disabled)
     Node.js execute file as a web server  
 
-+ swagger  
++ swagger  (Default Disabled)
     Web publish files on http://localhost:8080/swagger/ 
