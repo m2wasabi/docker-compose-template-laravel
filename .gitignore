@@ -11,3 +11,4 @@ example/**/*.ppm
 /node
 /api
 /swagger
+/app
