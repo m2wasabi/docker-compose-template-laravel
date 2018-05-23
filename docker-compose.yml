@@ -18,6 +18,18 @@ php-fpm:
         - redis
     working_dir: /app
     environment:
+        APP_NAME: ${PROJECT_NAME}
+        APP_KEY: base64:1PCJD2skvjBXiXwxN7US8DdM3QiSNTuouD7CzSFo0dY=
+        APP_ENV: local
+        APP_DEBUG: "true"
+        APP_URL: http://localhost:8080
+        DB_CONNECTION: mysql
+        DB_HOST: mysql
+        DB_PORT: 3306
+        DB_DATABASE: homestead
+        DB_USERNAME: homestead
+        DB_PASSWORD: secret
+        REDIS_HOST: redis
         REDIS_PORT: 
 
 # nginx
