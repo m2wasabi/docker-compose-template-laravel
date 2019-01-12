@@ -1,6 +1,7 @@
 FROM php:7-fpm-alpine
 RUN apk add --no-cache \
         zip \
+        libzip-dev \
         libpng \
         libpng-dev \
         libjpeg \
