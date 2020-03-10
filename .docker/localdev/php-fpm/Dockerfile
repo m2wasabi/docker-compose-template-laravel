@@ -1,4 +1,4 @@
-FROM php:7-fpm-alpine
+FROM php:7.4-fpm-alpine
 RUN apk add --no-cache \
         zip \
         libzip-dev \
@@ -10,7 +10,8 @@ RUN apk add --no-cache \
         libxml2 \
         libxml2-dev \
         openssl \
-        openssl-dev 
+        openssl-dev \
+        oniguruma-dev
 RUN docker-php-ext-install \
         pdo_mysql \
         mysqli \
@@ -20,6 +21,7 @@ RUN docker-php-ext-install \
         xml \
         opcache \
         zip 
-RUN curl -sS https://getcomposer.org/installer | php ;mv composer.phar /usr/local/bin/composer;
-RUN composer global require hirak/prestissimo
-RUN composer global require phpunit/phpunit
+RUN curl -sS https://getcomposer.org/installer | php ;mv composer.phar /usr/local/bin/composer \
+&& composer config -g repositories.packagist composer https://packagist.jp \
+&& composer global require hirak/prestissimo \
+&& composer global require phpunit/phpunit
