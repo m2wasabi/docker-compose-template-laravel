@@ -42,19 +42,19 @@ Linux, OSX amd Windows firiendly.
 
     ### Nginx
 
-    `docker-assets/nginx/conf.d/vhosts-main.conf`
+    `.docker/localdev/nginx/conf.d/vhosts-main.conf`
 
     + Comment or uncomment settings
 
     ### PHP
 
-    `docker-assets/php-fpm/Dockerfile`
+    `.docker/localdev/php-fpm/Dockerfile`
 
     + Configure php packages
 
     ### Node.js (Default disabled)
 
-    `docker-assets/node/scripts/bootstrap.sh`
+    `.docker/localdev/node/scripts/bootstrap.sh`
 
     + Configure entrypoint
 
@@ -189,7 +189,7 @@ mysql.bat
 
 ## Data files and endpoints
 
-+ mysql_data/  
++ .mysql_data/  
     MySQL database storage  
     If destroy this content, Docker re-create new database.  
 
