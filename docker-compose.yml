@@ -1,82 +1,97 @@
-# data-www
-data-www:
-    container_name: ${PROJECT_NAME}_data-www
-    image: busybox
-    volumes:
-        - ./app:/app
-
-## php-fpm
-php-fpm:
+version: "3.7"
+services:
+  ## php-fpm
+  php-fpm:
     container_name: ${PROJECT_NAME}_php-fpm
     build: ./docker-assets/php-fpm
-    volumes_from:
-        - data-www
     volumes:
-        - ./docker-assets/php-fpm/scripts:/scripts
-    links:
-        - mysql
-        - redis
+      - type: bind
+        source: ./app
+        target: /app
+      - type: bind
+        source: .docker/localdev/php-fpm/scripts
+        target: /scripts
+        read_only: true
+    depends_on:
+      - mysql
+      - redis
     working_dir: /app
     environment:
-        APP_NAME: ${PROJECT_NAME}
-        APP_KEY: base64:1PCJD2skvjBXiXwxN7US8DdM3QiSNTuouD7CzSFo0dY=
-        APP_ENV: local
-        APP_DEBUG: "true"
-        APP_URL: http://localhost:8080
-        DB_CONNECTION: mysql
-        DB_HOST: mysql
-        DB_PORT: 3306
-        DB_DATABASE: homestead
-        DB_USERNAME: homestead
-        DB_PASSWORD: secret
-        REDIS_HOST: redis
-        REDIS_PORT: 
+      APP_NAME: ${PROJECT_NAME}
+      APP_KEY: base64:1PCJD2skvjBXiXwxN7US8DdM3QiSNTuouD7CzSFo0dY=
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8080
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: homestead
+      DB_USERNAME: homestead
+      DB_PASSWORD: secret
+      REDIS_HOST: redis
+      REDIS_PORT: 
 
-# nginx
-nginx:
+  # nginx
+  nginx:
     container_name: ${PROJECT_NAME}_nginx
     build: ./docker-assets/nginx
-    volumes_from:
-        - data-www
     volumes:
-        # - ./swagger:/swagger
-        - ./docker-assets/nginx/conf.d:/etc/nginx/conf.d
-    links:
-        - php-fpm
-        # - node
+      - type: bind
+        source: ./app
+        target: /app
+      - type: bind
+        source: ./swagger
+        target: /swagger
+      - type: bind
+        source: ./.docker/localdev/nginx/conf.d
+        target: /etc/nginx/conf.d
+        read_only: true
+    depends_on:
+      - php-fpm
+    #   - node
     ports:
-        - "8080:8080"
-        - "443:443"
+      - "8080:8080"
+      - "443:443"
     working_dir: /app
 
-# mysql
-mysql:
+  # mysql
+  mysql:
     container_name: ${PROJECT_NAME}_mysql
     image: mysql
     volumes:
-        - ./docker-assets/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
-        - ./mysql_data:/var/lib/mysql
+      - type: bind
+        source: ./.docker/localdev/mysql/custom.cnf
+        target: /etc/mysql/conf.d/custom.cnf
+        read_only: true
+      - type: bind
+        source: ./.mysql_data
+        target: /var/lib/mysql
     ports:
-         - "3306:3306"
+      - "3306:3306"
     environment:
-        MYSQL_ROOT_PASSWORD: secret
-        MYSQL_DATABASE: homestead
-        MYSQL_USER: homestead
-        MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: homestead
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
 
-## redis
-redis:
+  ## redis
+  redis:
     container_name: ${PROJECT_NAME}_redis
     image: redis:alpine
 
-# ## node
-# node:
+#   ## node
+#   node:
 #     container_name: ${PROJECT_NAME}_node
 #     image: node
 #     volumes:
-#         - ./docker-assets/node/scripts:/scripts
-#         - ./node:/app
-#     links:
-#         - mysql
+#       - type: bind
+#         source: ./node
+#         target: /app
+#       - type: bind
+#         source: .docker/localdev/node/scripts
+#         target: /scripts
+#         read_only: true
+#     depends_on:
+#       - mysql
 #     working_dir: /app
 #     entrypoint: /scripts/bootstrap.sh
